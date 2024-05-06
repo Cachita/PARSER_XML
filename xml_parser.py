@@ -2,7 +2,8 @@ import xml.etree.ElementTree as ET
 
 class ElementoXML:
     """Clase base para representar elementos XML."""
-
+    
+    # Herencia: ElementoHoja y ElementoPadre heredan de ElementoXML
     def __init__(self, nombre, atributos):
         self.nombre = nombre
         self.atributos = atributos
@@ -17,11 +18,12 @@ class ElementoXML:
             return ""
 
     def procesar(self, visitador):
-        visitador.visitar(self)
+        visitador.visitar(self)  # Polimorfismo de inclusion: Invocación del método visitar dependiendo del tipo de objeto.
 
 class ElementoHoja(ElementoXML):
     """Clase para representar elementos XML hoja (sin subelementos)."""
-
+    
+    # Herencia: ElementoHoja hereda de ElementoXML
     def __init__(self, nombre, atributos, contenido):
         super().__init__(nombre, atributos)
         self.contenido = contenido
@@ -30,11 +32,12 @@ class ElementoHoja(ElementoXML):
         return f"{super().__str__()}>{self.contenido}</{self.nombre}>"
 
     def procesar(self, visitador):
-        visitador.visitar_hoja(self)
+        visitador.visitar_hoja(self)  # Polimorfismo de inclusion: Invocación del método visitar_hoja dependiendo del tipo de objeto.
 
 class ElementoPadre(ElementoXML):
     """Clase para representar elementos XML padre (con subelementos)."""
-
+    
+    # Herencia: ElementoPadre hereda de ElementoXML
     def __init__(self, nombre, atributos, elementos_hijos):
         super().__init__(nombre, atributos)
         self.elementos_hijos = elementos_hijos
@@ -43,7 +46,7 @@ class ElementoPadre(ElementoXML):
         return f"{super().__str__()}\n{''.join(str(elemento) for elemento in self.elementos_hijos)}\n</{self.nombre}>"
 
     def procesar(self, visitador):
-        visitador.visitar_padre(self, self.elementos_hijos)
+        visitador.visitar_padre(self, self.elementos_hijos)  # Polimorfismo de inclusion: Invocación del método visitar_padre dependiendo del tipo de objeto.
 
 
 class Visitador:
@@ -76,7 +79,7 @@ class VisitadorImpresion(Visitador):
         print(f"Atributos: {elemento_padre.atributos}")
         print("Subelementos:")
         for elemento_hijo in elementos_hijos:
-            elemento_hijo.procesar(self)
+            elemento_hijo.procesar(self)  # Polimorfismo de inclusion: Invocación del método procesar dependiendo del tipo de objeto.
 
 def construir_arbol_xml(ruta_archivo):
     arbol = ET.parse(ruta_archivo)
@@ -100,7 +103,7 @@ def construir_arbol_xml(ruta_archivo):
     return procesar_nodo(raiz)
 
 def main():
-    ruta_archivo_xml = "C:/Users/glsx0/Downloads/Documento.xml" #En esta línea se debe cambiar la ruta.
+    ruta_archivo_xml = "C:/Users/glsx0/Downloads/Documento.xml" #Recuerde cambiar esta ruta.
     arbol_xml = construir_arbol_xml(ruta_archivo_xml)
     visitador = VisitadorImpresion()
 
