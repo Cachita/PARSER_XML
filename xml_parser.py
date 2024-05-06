@@ -100,7 +100,7 @@ def construir_arbol_xml(ruta_archivo):
     return procesar_nodo(raiz)
 
 def main():
-    ruta_archivo_xml = "C:/Users/glsx0/Downloads/Documento.xml"
+    ruta_archivo_xml = "C:/Users/glsx0/Downloads/Documento.xml" #En esta línea se debe cambiar la ruta.
     arbol_xml = construir_arbol_xml(ruta_archivo_xml)
     visitador = VisitadorImpresion()
 
